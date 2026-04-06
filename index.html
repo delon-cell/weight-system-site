@@ -9,6 +9,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
@@ -31,43 +32,72 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; }
+        
+        /* Стили для светлой темы */
         .glass-header {
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        
+        /* Стили для темной темы */
+        .dark .glass-header {
+            background: rgba(15, 23, 42, 0.95); /* slate-900 */
+            backdrop-filter: blur(10px);
         }
     </style>
+    
+    <!-- Скрипт инициализации темы (предотвращает мерцание) -->
+    <script>
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased selection:bg-medical-100 selection:text-medical-900 flex flex-col min-h-screen">
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-300 antialiased selection:bg-medical-200 selection:text-medical-900 flex flex-col min-h-screen transition-colors duration-300">
 
     <!-- HEADER (Дисклеймер + Навигация) -->
-    <header class="fixed w-full z-50 glass-header shadow-sm border-b border-slate-200">
+    <header class="fixed w-full z-50 glass-header shadow-sm border-b border-slate-200 dark:border-slate-800 transition-colors duration-300">
         <!-- Информационное уведомление -->
-        <div class="bg-slate-100 border-b border-slate-200 text-slate-600 text-xs text-center py-2 px-4">
-            <span class="font-semibold text-slate-800">Информационное уведомление:</span> Проект носит образовательный характер. Аналитика базируется на клинических руководствах и мета-анализах. Не является медицинской рекомендацией.
+        <div class="bg-slate-100 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-700/50 text-slate-600 dark:text-slate-400 text-xs text-center py-2 px-4 transition-colors duration-300">
+            <span class="font-semibold text-slate-800 dark:text-slate-200">Информационное уведомление:</span> Проект носит образовательный характер. Аналитика базируется на клинических руководствах и мета-анализах. Не является медицинской рекомендацией.
         </div>
 
         <!-- Навигация -->
         <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-14 sm:h-16">
                 <div class="flex items-center gap-2">
-                    <div class="w-8 h-8 rounded bg-medical-50 flex items-center justify-center text-medical-800" aria-hidden="true">
+                    <div class="w-8 h-8 rounded bg-medical-50 dark:bg-medical-900/50 flex items-center justify-center text-medical-800 dark:text-medical-200 transition-colors duration-300" aria-hidden="true">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
                     </div>
-                    <span class="font-semibold text-lg tracking-tight text-slate-900">Метаболика</span>
+                    <span class="font-semibold text-lg tracking-tight text-slate-900 dark:text-white transition-colors duration-300">Метаболика</span>
                 </div>
                 
                 <!-- Desktop Menu -->
-                <div class="hidden md:flex space-x-8">
-                    <a href="#core" class="text-slate-600 hover:text-medical-800 font-medium text-sm transition-colors">Ядро системы</a>
-                    <a href="#supplements" class="text-slate-600 hover:text-medical-800 font-medium text-sm transition-colors">Нутрицевтики</a>
-                    <a href="#pharmacology" class="text-slate-600 hover:text-medical-800 font-medium text-sm transition-colors">Интервенции</a>
-                    <a href="#maintenance" class="text-slate-600 hover:text-medical-800 font-medium text-sm transition-colors">Удержание</a>
-                    <a href="#faq" class="text-slate-600 hover:text-medical-800 font-medium text-sm transition-colors">FAQ</a>
+                <div class="hidden md:flex space-x-6 lg:space-x-8 items-center">
+                    <a href="#core" class="text-slate-600 dark:text-slate-400 hover:text-medical-800 dark:hover:text-medical-200 font-medium text-sm transition-colors">Ядро системы</a>
+                    <a href="#supplements" class="text-slate-600 dark:text-slate-400 hover:text-medical-800 dark:hover:text-medical-200 font-medium text-sm transition-colors">Нутрицевтики</a>
+                    <a href="#pharmacology" class="text-slate-600 dark:text-slate-400 hover:text-medical-800 dark:hover:text-medical-200 font-medium text-sm transition-colors">Интервенции</a>
+                    <a href="#maintenance" class="text-slate-600 dark:text-slate-400 hover:text-medical-800 dark:hover:text-medical-200 font-medium text-sm transition-colors">Удержание</a>
+                    <a href="#faq" class="text-slate-600 dark:text-slate-400 hover:text-medical-800 dark:hover:text-medical-200 font-medium text-sm transition-colors">FAQ</a>
+                    
+                    <!-- Theme Toggle Button (Desktop) -->
+                    <button id="theme-toggle" type="button" class="text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none rounded-lg text-sm p-2 transition-colors">
+                        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                    </button>
                 </div>
 
-                <!-- Mobile Menu Button -->
-                <div class="md:hidden flex items-center">
-                    <button id="mobile-menu-btn" class="text-slate-500 hover:text-slate-800 p-2 focus:outline-none" aria-label="Открыть меню">
+                <!-- Mobile Menu & Theme Buttons -->
+                <div class="md:hidden flex items-center gap-2">
+                    <!-- Theme Toggle Button (Mobile) -->
+                    <button id="theme-toggle-mobile" type="button" class="text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none rounded-lg text-sm p-2 transition-colors">
+                        <svg id="theme-toggle-dark-icon-mobile" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                        <svg id="theme-toggle-light-icon-mobile" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                    </button>
+                    
+                    <button id="mobile-menu-btn" class="text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg p-2 focus:outline-none transition-colors" aria-label="Открыть меню">
                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                         </svg>
@@ -77,13 +107,13 @@
         </nav>
 
         <!-- Mobile Menu Panel -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-100 shadow-lg absolute w-full">
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 shadow-lg absolute w-full transition-colors duration-300">
             <nav class="px-4 pt-2 pb-4 space-y-1">
-                <a href="#core" class="block px-3 py-3 bg-slate-50 hover:bg-slate-100 text-slate-700 font-medium rounded-lg transition-colors">Ядро системы</a>
-                <a href="#supplements" class="block px-3 py-3 bg-slate-50 hover:bg-slate-100 text-slate-700 font-medium rounded-lg transition-colors">Нутрицевтики</a>
-                <a href="#pharmacology" class="block px-3 py-3 bg-slate-50 hover:bg-slate-100 text-slate-700 font-medium rounded-lg transition-colors">Медицинские интервенции</a>
-                <a href="#maintenance" class="block px-3 py-3 bg-slate-50 hover:bg-slate-100 text-slate-700 font-medium rounded-lg transition-colors">Удержание веса (NWCR)</a>
-                <a href="#faq" class="block px-3 py-3 bg-slate-50 hover:bg-slate-100 text-slate-700 font-medium rounded-lg transition-colors">FAQ</a>
+                <a href="#core" class="block px-3 py-3 bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium rounded-lg transition-colors">Ядро системы</a>
+                <a href="#supplements" class="block px-3 py-3 bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium rounded-lg transition-colors">Нутрицевтики</a>
+                <a href="#pharmacology" class="block px-3 py-3 bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium rounded-lg transition-colors">Медицинские интервенции</a>
+                <a href="#maintenance" class="block px-3 py-3 bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium rounded-lg transition-colors">Удержание веса (NWCR)</a>
+                <a href="#faq" class="block px-3 py-3 bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium rounded-lg transition-colors">FAQ</a>
             </nav>
         </div>
     </header>
@@ -92,19 +122,19 @@
     <main class="flex-grow pt-24 sm:pt-28">
 
         <!-- Hero Section -->
-        <section class="py-12 sm:py-20 px-4 sm:px-6 bg-white text-center">
+        <section class="py-12 sm:py-20 px-4 sm:px-6 bg-slate-50 dark:bg-slate-900 text-center transition-colors duration-300">
             <div class="max-w-3xl mx-auto">
-                <span class="inline-block py-1 px-3 rounded-md bg-medical-50 text-medical-800 text-[11px] font-semibold tracking-wide uppercase mb-6 border border-medical-100">
+                <span class="inline-block py-1 px-3 rounded-md bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-[11px] font-semibold tracking-wide uppercase mb-6 border border-blue-100 dark:border-blue-800/50 transition-colors duration-300">
                     Доказательная база
                 </span>
-                <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 tracking-tight mb-6 leading-tight">
+                <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 dark:text-white tracking-tight mb-6 leading-tight transition-colors duration-300">
                     Системная архитектура <br class="hidden sm:block">управления весом
                 </h1>
-                <p class="text-base sm:text-lg text-slate-600 mb-8 leading-relaxed max-w-2xl mx-auto">
+                <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 mb-8 leading-relaxed max-w-2xl mx-auto transition-colors duration-300">
                     Долгосрочное снижение массы тела — это не линейная модель ограничения калорий, а комплексная перенастройка энергетического гомеостаза. Устойчивый результат требует системного управления питанием, внетренировочной активностью и нейробиологией пищевого поведения.
                 </p>
                 <div class="flex justify-center">
-                    <a href="#core" class="px-6 py-3 border border-slate-200 text-sm font-medium rounded-lg text-slate-700 bg-white hover:bg-slate-50 hover:text-slate-900 shadow-sm transition-all">
+                    <a href="#core" class="px-6 py-3 border border-slate-200 dark:border-slate-700 text-sm font-medium rounded-lg text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 shadow-sm transition-all">
                         Изучить архитектуру
                     </a>
                 </div>
@@ -112,111 +142,111 @@
         </section>
 
         <!-- Структурная иерархия -->
-        <section class="py-10 px-4 bg-slate-50 border-t border-slate-200" aria-label="Иерархия методологии">
+        <section class="py-10 px-4 bg-white dark:bg-slate-800/50 border-t border-slate-200 dark:border-slate-800 transition-colors duration-300" aria-label="Иерархия методологии">
             <div class="max-w-5xl mx-auto">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center divide-y md:divide-y-0 md:divide-x divide-slate-200">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center divide-y md:divide-y-0 md:divide-x divide-slate-100 dark:divide-slate-700/50">
                     <article class="p-4 md:py-0">
-                        <h2 class="text-medical-800 font-bold mb-2">1. Фундамент (Ядро)</h2>
-                        <p class="text-xs text-slate-500 leading-relaxed">Питание, активность (NEAT), сон и контроль пищевого поведения. Базовая структура метаболического здоровья.</p>
+                        <h2 class="text-medical-700 dark:text-medical-300 font-bold mb-2 transition-colors">1. Фундамент (Ядро)</h2>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed transition-colors">Питание, активность (NEAT), сон и контроль пищевого поведения. Базовая структура метаболического здоровья.</p>
                     </article>
                     <article class="p-4 md:py-0">
-                        <h2 class="text-slate-700 font-bold mb-2">2. Вспомогательные элементы</h2>
-                        <p class="text-xs text-slate-500 leading-relaxed">Доказанные нутрицевтики для компенсации дефицитов. Не эффективны изолированно от фундаментальной базы.</p>
+                        <h2 class="text-slate-700 dark:text-slate-300 font-bold mb-2 transition-colors">2. Вспомогательные элементы</h2>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed transition-colors">Доказанные нутрицевтики для компенсации дефицитов. Не эффективны изолированно от фундаментальной базы.</p>
                     </article>
                     <article class="p-4 md:py-0">
-                        <h2 class="text-slate-500 font-bold mb-2">3. Строгие ограничения</h2>
-                        <p class="text-xs text-slate-500 leading-relaxed">Фармакологические интервенции. Применяются по клиническим показаниям, несут риски эффекта отмены и саркопении.</p>
+                        <h2 class="text-slate-500 dark:text-slate-400 font-bold mb-2 transition-colors">3. Строгие ограничения</h2>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed transition-colors">Фармакологические интервенции. Применяются по клиническим показаниям, несут риски эффекта отмены и саркопении.</p>
                     </article>
                 </div>
             </div>
         </section>
 
         <!-- Ядро системы -->
-        <section id="core" class="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <section id="core" class="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
             <div class="max-w-6xl mx-auto">
                 <header class="mb-12 md:text-center max-w-3xl mx-auto">
-                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-4">Ядро системы (4 компонента)</h2>
-                    <p class="text-sm text-slate-600 leading-relaxed">
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-4 transition-colors">Ядро системы (4 компонента)</h2>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed transition-colors">
                         Фундаментальные элементы, определяющие метаболическую адаптацию и гормональную регуляцию (ось лептин-грелин, теория Set Point). Исключение любого из компонентов повышает вероятность рецидива.
                     </p>
                 </header>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- Питание -->
-                    <article class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200">
-                        <div class="flex items-center gap-3 mb-5">
-                            <div class="w-10 h-10 bg-slate-50 rounded-lg flex items-center justify-center text-slate-700 border border-slate-100" aria-hidden="true">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    <article class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 transition-colors duration-300">
+                        <div class="flex items-center gap-4 mb-5">
+                            <div class="w-12 h-12 bg-emerald-50 dark:bg-emerald-900/20 rounded-xl flex items-center justify-center text-emerald-600 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-800/30 transition-colors duration-300" aria-hidden="true">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                             </div>
-                            <h3 class="text-lg font-bold text-slate-900">1. Нутритивная плотность</h3>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white transition-colors">1. Нутритивная плотность</h3>
                         </div>
-                        <ul class="space-y-3 text-[13px] sm:text-sm text-slate-600 list-none pl-0">
+                        <ul class="space-y-3 text-[13px] sm:text-sm text-slate-600 dark:text-slate-400 list-none pl-0 transition-colors">
                             <li class="flex items-start gap-2">
-                                <span class="text-slate-400 mt-0.5" aria-hidden="true">•</span>
+                                <span class="text-emerald-400 dark:text-emerald-500 mt-0.5" aria-hidden="true">•</span>
                                 <span><b>Метаболическая адаптация:</b> Глубокий дефицит энергии интерпретируется организмом как угроза. Следствием является снижение выработки тиреоидных гормонов и падение базового расхода энергии (BMR).</span>
                             </li>
                             <li class="flex items-start gap-2">
-                                <span class="text-slate-400 mt-0.5" aria-hidden="true">•</span>
+                                <span class="text-emerald-400 dark:text-emerald-500 mt-0.5" aria-hidden="true">•</span>
                                 <span><b>Качество макронутриентов:</b> Потребление белка и клетчатки необходимо для поддержания сытости и преодоления биологической сопротивляемости организма потере массы (Set Point Theory).</span>
                             </li>
                         </ul>
                     </article>
 
                     <!-- Движение -->
-                    <article class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200">
-                        <div class="flex items-center gap-3 mb-5">
-                            <div class="w-10 h-10 bg-slate-50 rounded-lg flex items-center justify-center text-slate-700 border border-slate-100" aria-hidden="true">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    <article class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 transition-colors duration-300">
+                        <div class="flex items-center gap-4 mb-5">
+                            <div class="w-12 h-12 bg-sky-50 dark:bg-sky-900/20 rounded-xl flex items-center justify-center text-sky-600 dark:text-sky-400 border border-sky-100 dark:border-sky-800/30 transition-colors duration-300" aria-hidden="true">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                             </div>
-                            <h3 class="text-lg font-bold text-slate-900">2. Активность (NEAT) и мышцы</h3>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white transition-colors">2. Активность (NEAT) и мышцы</h3>
                         </div>
-                        <ul class="space-y-3 text-[13px] sm:text-sm text-slate-600 list-none pl-0">
+                        <ul class="space-y-3 text-[13px] sm:text-sm text-slate-600 dark:text-slate-400 list-none pl-0 transition-colors">
                             <li class="flex items-start gap-2">
-                                <span class="text-slate-400 mt-0.5" aria-hidden="true">•</span>
+                                <span class="text-sky-400 dark:text-sky-500 mt-0.5" aria-hidden="true">•</span>
                                 <span><b>Внетренировочная активность (NEAT):</b> Бытовые движения (ходьба, работа стоя). Является ключевым фактором суточного расхода энергии (TDEE). Дисперсия показателя между людьми достигает 2000 ккал/сут.</span>
                             </li>
                             <li class="flex items-start gap-2">
-                                <span class="text-slate-400 mt-0.5" aria-hidden="true">•</span>
+                                <span class="text-sky-400 dark:text-sky-500 mt-0.5" aria-hidden="true">•</span>
                                 <span><b>Сохранение сухой массы (LBM):</b> Потеря веса без резистентных (силовых) нагрузок приводит к распаду мышечной ткани, что необратимо замедляет обмен веществ.</span>
                             </li>
                         </ul>
                     </article>
 
                     <!-- Сон -->
-                    <article class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200">
-                        <div class="flex items-center gap-3 mb-5">
-                            <div class="w-10 h-10 bg-slate-50 rounded-lg flex items-center justify-center text-slate-700 border border-slate-100" aria-hidden="true">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                    <article class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 transition-colors duration-300">
+                        <div class="flex items-center gap-4 mb-5">
+                            <div class="w-12 h-12 bg-indigo-50 dark:bg-indigo-900/20 rounded-xl flex items-center justify-center text-indigo-600 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-800/30 transition-colors duration-300" aria-hidden="true">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
                             </div>
-                            <h3 class="text-lg font-bold text-slate-900">3. Хронобиология</h3>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white transition-colors">3. Хронобиология</h3>
                         </div>
-                        <ul class="space-y-3 text-[13px] sm:text-sm text-slate-600 list-none pl-0">
+                        <ul class="space-y-3 text-[13px] sm:text-sm text-slate-600 dark:text-slate-400 list-none pl-0 transition-colors">
                             <li class="flex items-start gap-2">
-                                <span class="text-slate-400 mt-0.5" aria-hidden="true">•</span>
+                                <span class="text-indigo-400 dark:text-indigo-500 mt-0.5" aria-hidden="true">•</span>
                                 <span><b>Ось Лептин-Грелин:</b> Депривация сна стимулирует выработку грелина (гормона голода) и подавляет лептин (сигнал сытости), что ведет к неосознанному профициту в 300–500 ккал на следующий день.</span>
                             </li>
                             <li class="flex items-start gap-2">
-                                <span class="text-slate-400 mt-0.5" aria-hidden="true">•</span>
+                                <span class="text-indigo-400 dark:text-indigo-500 mt-0.5" aria-hidden="true">•</span>
                                 <span><b>Инсулинорезистентность и кортизол:</b> Недостаток глубоких фаз сна снижает чувствительность к инсулину и повышает уровень кортизола, способствуя висцеральному депонированию жира.</span>
                             </li>
                         </ul>
                     </article>
 
                     <!-- Поведение -->
-                    <article class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200">
-                        <div class="flex items-center gap-3 mb-5">
-                            <div class="w-10 h-10 bg-slate-50 rounded-lg flex items-center justify-center text-slate-700 border border-slate-100" aria-hidden="true">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                    <article class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 transition-colors duration-300">
+                        <div class="flex items-center gap-4 mb-5">
+                            <div class="w-12 h-12 bg-violet-50 dark:bg-violet-900/20 rounded-xl flex items-center justify-center text-violet-600 dark:text-violet-400 border border-violet-100 dark:border-violet-800/30 transition-colors duration-300" aria-hidden="true">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
                             </div>
-                            <h3 class="text-lg font-bold text-slate-900">4. Пищевое поведение</h3>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white transition-colors">4. Пищевое поведение</h3>
                         </div>
-                        <ul class="space-y-3 text-[13px] sm:text-sm text-slate-600 list-none pl-0">
+                        <ul class="space-y-3 text-[13px] sm:text-sm text-slate-600 dark:text-slate-400 list-none pl-0 transition-colors">
                             <li class="flex items-start gap-2">
-                                <span class="text-slate-400 mt-0.5" aria-hidden="true">•</span>
+                                <span class="text-violet-400 dark:text-violet-500 mt-0.5" aria-hidden="true">•</span>
                                 <span><b>Пищевой шум (Food Noise):</b> Навязчивые мысли о еде рассматриваются как нейробиологическая дисрегуляция, а не как дефицит волевых качеств.</span>
                             </li>
                             <li class="flex items-start gap-2">
-                                <span class="text-slate-400 mt-0.5" aria-hidden="true">•</span>
+                                <span class="text-violet-400 dark:text-violet-500 mt-0.5" aria-hidden="true">•</span>
                                 <span><b>Предикторы рецидива:</b> Хронический дистресс и переоценка важности формы тела (overvaluation of shape) статистически повышают риск возврата веса. Важна устойчивая, а не ограничительная приверженность (adherence).</span>
                             </li>
                         </ul>
@@ -226,22 +256,22 @@
         </section>
 
         <!-- Вспомогательные нутрицевтики -->
-        <section id="supplements" class="py-16 px-4 sm:px-6 bg-slate-50 border-y border-slate-200">
+        <section id="supplements" class="py-16 px-4 sm:px-6 bg-white dark:bg-slate-800/50 border-y border-slate-200 dark:border-slate-800 transition-colors duration-300">
             <div class="max-w-4xl mx-auto">
                 <header class="mb-10 md:text-center">
-                    <h2 class="text-2xl font-bold text-slate-900 mb-2">Вспомогательные нутрицевтики</h2>
-                    <p class="text-sm text-slate-500">
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2 transition-colors">Вспомогательные нутрицевтики</h2>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 transition-colors">
                         Функция добавок сводится к компенсации дефицитов и поддержке систем организма на фоне энергетического дефицита. Они не инициируют процесс снижения веса самостоятельно.
                     </p>
                 </header>
 
                 <div class="grid sm:grid-cols-2 gap-6">
                     <!-- Обосновано -->
-                    <article class="p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
-                        <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wide mb-4 flex items-center gap-2">
-                            <span class="w-2 h-2 rounded-full bg-slate-400" aria-hidden="true"></span> Доказательная база
+                    <article class="p-6 bg-emerald-50/50 dark:bg-emerald-900/10 border border-emerald-100 dark:border-emerald-800/50 rounded-xl shadow-sm transition-colors duration-300">
+                        <h3 class="text-sm font-bold text-emerald-900 dark:text-emerald-300 uppercase tracking-wide mb-4 flex items-center gap-2 transition-colors">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400" aria-hidden="true"></span> Доказательная база
                         </h3>
-                        <ul class="text-[13px] text-slate-600 space-y-3 list-none pl-0">
+                        <ul class="text-[13px] text-slate-700 dark:text-slate-300 space-y-3 list-none pl-0 transition-colors">
                             <li><b>Сывороточный протеин:</b> Поддержка мышечной массы в условиях катаболизма (дефицита калорий).</li>
                             <li><b>Растворимая клетчатка:</b> Положительное влияние на микробиом кишечника и пролонгация чувства сытости.</li>
                             <li><b>Витамин D и Омега-3:</b> Целесообразны при лабораторно подтвержденном дефиците и для контроля маркеров воспаления.</li>
@@ -249,11 +279,11 @@
                     </article>
 
                     <!-- Спорно -->
-                    <article class="p-6 bg-white border border-slate-200 rounded-xl shadow-sm">
-                        <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wide mb-4 flex items-center gap-2">
-                            <span class="w-2 h-2 rounded-full bg-slate-200" aria-hidden="true"></span> Маркетинговые утверждения
+                    <article class="p-6 bg-amber-50/50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-800/50 rounded-xl shadow-sm transition-colors duration-300">
+                        <h3 class="text-sm font-bold text-amber-900 dark:text-amber-300 uppercase tracking-wide mb-4 flex items-center gap-2 transition-colors">
+                            <span class="w-2 h-2 rounded-full bg-amber-500 dark:bg-amber-400" aria-hidden="true"></span> Маркетинговые утверждения
                         </h3>
-                        <ul class="text-[13px] text-slate-600 space-y-3 list-none pl-0">
+                        <ul class="text-[13px] text-slate-700 dark:text-slate-300 space-y-3 list-none pl-0 transition-colors">
                             <li><b>L-карнитин:</b> Подтвержденная эффективность наблюдается преимущественно у лиц с клиническим дефицитом данного вещества.</li>
                             <li><b>Стимуляторы (экстракты, кофеин):</b> Фиксируется статистически незначимое влияние на общий суточный расход энергии.</li>
                             <li><b>«Блокаторы» усвоения:</b> Отсутствуют надежные клинические данные о долгосрочной эффективности и безопасности.</li>
@@ -264,60 +294,69 @@
         </section>
 
         <!-- Фармакология -->
-        <section id="pharmacology" class="py-16 px-4 sm:px-6 bg-white">
+        <section id="pharmacology" class="py-16 px-4 sm:px-6 bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
             <div class="max-w-4xl mx-auto">
-                <article class="bg-slate-50 border border-slate-200 rounded-2xl p-6 sm:p-8">
+                <article class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 sm:p-8 shadow-sm transition-colors duration-300">
                     <header class="flex items-center gap-3 mb-6">
-                        <svg class="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
-                        <h2 class="text-xl font-bold text-slate-800">Медицинские интервенции (ГПП-1)</h2>
+                        <svg class="w-6 h-6 text-slate-400 dark:text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                        <h2 class="text-xl font-bold text-slate-800 dark:text-white transition-colors">Медицинские интервенции (ГПП-1)</h2>
                     </header>
                     
-                    <p class="text-sm text-slate-600 mb-6 leading-relaxed">
+                    <p class="text-sm text-slate-600 dark:text-slate-400 mb-6 leading-relaxed transition-colors">
                         Агонисты рецепторов ГПП-1 включены ВОЗ в перечень средств для лечения ожирения, так как воздействуют на нейробиологические механизмы регуляции аппетита. Однако их применение без соблюдения фундаментальных протоколов (питание и активность) сопряжено со значимыми рисками:
                     </p>
 
                     <div class="grid sm:grid-cols-2 gap-6 mb-6">
-                        <div class="border-l-2 border-slate-300 pl-4">
-                            <h3 class="font-semibold text-sm text-slate-800 mb-1">Саркопения</h3>
-                            <p class="text-[13px] text-slate-600 leading-relaxed">До 40% веса, потерянного на фоне медикаментозной терапии, может приходиться на сухую мышечную массу. Терапия требует жесткого контроля потребления белка и введения силовых нагрузок.</p>
+                        <div class="border-l-2 border-slate-300 dark:border-slate-600 pl-4 transition-colors">
+                            <h3 class="font-semibold text-sm text-slate-800 dark:text-slate-200 mb-1 transition-colors">Саркопения</h3>
+                            <p class="text-[13px] text-slate-600 dark:text-slate-400 leading-relaxed transition-colors">До 40% веса, потерянного на фоне медикаментозной терапии, может приходиться на сухую мышечную массу. Терапия требует жесткого контроля потребления белка и введения силовых нагрузок.</p>
                         </div>
-                        <div class="border-l-2 border-slate-300 pl-4">
-                            <h3 class="font-semibold text-sm text-slate-800 mb-1">Эффект отмены (Rebound)</h3>
-                            <p class="text-[13px] text-slate-600 leading-relaxed">По статистике, пациенты возвращают до 2/3 потерянного веса после отмены препарата, если за период терапии не были выстроены устойчивые поведенческие паттерны.</p>
+                        <div class="border-l-2 border-slate-300 dark:border-slate-600 pl-4 transition-colors">
+                            <h3 class="font-semibold text-sm text-slate-800 dark:text-slate-200 mb-1 transition-colors">Эффект отмены (Rebound)</h3>
+                            <p class="text-[13px] text-slate-600 dark:text-slate-400 leading-relaxed transition-colors">По статистике, пациенты возвращают до 2/3 потерянного веса после отмены препарата, если за период терапии не были выстроены устойчивые поведенческие паттерны.</p>
                         </div>
                     </div>
 
-                    <div class="bg-white border border-slate-200 rounded-lg p-4 text-[13px] text-slate-500">
-                        <b>Статус:</b> Назначается профильным специалистом строго по клиническим показаниям. Рассматривается как вспомогательный инструмент для облегчения внедрения поведенческих привычек, а не как самостоятельное и окончательное решение.
+                    <div class="bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-lg p-4 text-[13px] text-slate-600 dark:text-slate-400 transition-colors">
+                        <b class="text-slate-800 dark:text-slate-200">Статус:</b> Назначается профильным специалистом строго по клиническим показаниям. Рассматривается как вспомогательный инструмент для облегчения внедрения поведенческих привычек, а не как самостоятельное и окончательное решение.
                     </div>
                 </article>
             </div>
         </section>
 
         <!-- Мифы -->
-        <section id="myths" class="py-16 px-4 bg-slate-50 border-t border-slate-200">
+        <section id="myths" class="py-16 px-4 bg-white dark:bg-slate-800/50 border-t border-slate-200 dark:border-slate-800 transition-colors duration-300">
             <div class="max-w-6xl mx-auto">
-                <h2 class="text-2xl font-bold text-center text-slate-800 mb-10">Научные факты и частые заблуждения</h2>
+                <h2 class="text-2xl font-bold text-center text-slate-800 dark:text-white mb-10 transition-colors">Научные факты и частые заблуждения</h2>
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <article class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                        <h3 class="font-bold text-slate-800 mb-2 text-sm">Локальное жиросжигание</h3>
-                        <p class="text-[13px] text-slate-600 leading-relaxed">
+                    <article class="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm transition-colors duration-300">
+                        <div class="w-8 h-8 rounded bg-rose-50 dark:bg-rose-900/20 text-rose-500 dark:text-rose-400 flex items-center justify-center mb-4 transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <h3 class="font-bold text-slate-800 dark:text-slate-200 mb-2 text-sm transition-colors">Локальное жиросжигание</h3>
+                        <p class="text-[13px] text-slate-600 dark:text-slate-400 leading-relaxed transition-colors">
                             Физиологически невозможно сжигать жир в целевой зоне посредством локальных упражнений. Триглицериды расщепляются системно по всему организму, что обусловлено генетическими факторами.
                         </p>
                     </article>
                     
-                    <article class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                        <h3 class="font-bold text-slate-800 mb-2 text-sm">Детокс-программы</h3>
-                        <p class="text-[13px] text-slate-600 leading-relaxed">
-                            Детоксикация обеспечивается физиологической работой печени и почек. Соковые диеты лишены белка, а быстрая потеря веса связана с выведением воды и истощением запасов гликогена, а не жировой ткани.
+                    <article class="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm transition-colors duration-300">
+                        <div class="w-8 h-8 rounded bg-rose-50 dark:bg-rose-900/20 text-rose-500 dark:text-rose-400 flex items-center justify-center mb-4 transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <h3 class="font-bold text-slate-800 dark:text-slate-200 mb-2 text-sm transition-colors">Детокс-программы</h3>
+                        <p class="text-[13px] text-slate-600 dark:text-slate-400 leading-relaxed transition-colors">
+                            Детоксикация обеспечивается физиологической работой печени и почек. Соковые диеты лишены белка, а быстрая потеря веса связана с выведением воды и истощением запасов гликогена.
                         </p>
                     </article>
                     
-                    <article class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                        <h3 class="font-bold text-slate-800 mb-2 text-sm">Экстремальный дефицит</h3>
-                        <p class="text-[13px] text-slate-600 leading-relaxed">
-                            Агрессивное ограничение калорий активирует метаболическую адаптацию. Организм переходит в режим энергосбережения, снижая BMR, что в долгосрочной перспективе приводит к остановке снижения веса и последующему возврату.
+                    <article class="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm transition-colors duration-300">
+                        <div class="w-8 h-8 rounded bg-rose-50 dark:bg-rose-900/20 text-rose-500 dark:text-rose-400 flex items-center justify-center mb-4 transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <h3 class="font-bold text-slate-800 dark:text-slate-200 mb-2 text-sm transition-colors">Экстремальный дефицит</h3>
+                        <p class="text-[13px] text-slate-600 dark:text-slate-400 leading-relaxed transition-colors">
+                            Агрессивное ограничение калорий активирует метаболическую адаптацию. Организм переходит в режим энергосбережения, снижая BMR, что приводит к остановке снижения веса и возврату.
                         </p>
                     </article>
                 </div>
@@ -325,42 +364,42 @@
         </section>
 
         <!-- NWCR -->
-        <section id="maintenance" class="py-16 sm:py-20 px-4 sm:px-6 bg-white">
+        <section id="maintenance" class="py-16 sm:py-20 px-4 sm:px-6 bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
             <div class="max-w-4xl mx-auto">
                 <header class="text-center mb-10">
-                    <h2 class="text-2xl font-bold text-slate-900 mb-3">Статистика долгосрочного удержания (NWCR)</h2>
-                    <p class="text-sm text-slate-600 max-w-2xl mx-auto leading-relaxed">
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-3 transition-colors">Статистика долгосрочного удержания (NWCR)</h2>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed transition-colors">
                         Национальный реестр контроля веса США (NWCR) консолидирует данные лиц, успешно удерживающих результат (в среднем минус 30 кг) более 5 лет. Успех стабильно коррелирует с внедрением следующих поведенческих паттернов:
                     </p>
                 </header>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <article class="p-5 border border-slate-200 rounded-xl bg-slate-50 flex items-start gap-3">
-                        <span class="text-slate-400 mt-0.5" aria-hidden="true">•</span>
+                    <article class="p-5 border border-slate-200 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-800 flex items-start gap-3 transition-colors duration-300">
+                        <span class="text-blue-500 dark:text-blue-400 mt-0.5" aria-hidden="true">•</span>
                         <div>
-                            <h3 class="text-sm font-bold text-slate-800 mb-1">Высокий уровень NEAT</h3>
-                            <p class="text-[13px] text-slate-600">Около 60 минут в день затрачивается на физическую активность низкой интенсивности (преимущественно ходьбу).</p>
+                            <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200 mb-1 transition-colors">Высокий уровень NEAT</h3>
+                            <p class="text-[13px] text-slate-600 dark:text-slate-400 transition-colors">Около 60 минут в день затрачивается на физическую активность низкой интенсивности (преимущественно ходьбу).</p>
                         </div>
                     </article>
-                    <article class="p-5 border border-slate-200 rounded-xl bg-slate-50 flex items-start gap-3">
-                        <span class="text-slate-400 mt-0.5" aria-hidden="true">•</span>
+                    <article class="p-5 border border-slate-200 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-800 flex items-start gap-3 transition-colors duration-300">
+                        <span class="text-blue-500 dark:text-blue-400 mt-0.5" aria-hidden="true">•</span>
                         <div>
-                            <h3 class="text-sm font-bold text-slate-800 mb-1">Ежедневный завтрак (78%)</h3>
-                            <p class="text-[13px] text-slate-600">Регулярный утренний прием пищи способствует стабилизации утреннего кортизола и предотвращает неконтролируемые скачки грелина в течение дня.</p>
+                            <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200 mb-1 transition-colors">Ежедневный завтрак (78%)</h3>
+                            <p class="text-[13px] text-slate-600 dark:text-slate-400 transition-colors">Регулярный утренний прием пищи способствует стабилизации утреннего кортизола и предотвращает скачки грелина.</p>
                         </div>
                     </article>
-                    <article class="p-5 border border-slate-200 rounded-xl bg-slate-50 flex items-start gap-3">
-                        <span class="text-slate-400 mt-0.5" aria-hidden="true">•</span>
+                    <article class="p-5 border border-slate-200 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-800 flex items-start gap-3 transition-colors duration-300">
+                        <span class="text-blue-500 dark:text-blue-400 mt-0.5" aria-hidden="true">•</span>
                         <div>
-                            <h3 class="text-sm font-bold text-slate-800 mb-1">Самомониторинг (75%)</h3>
-                            <p class="text-[13px] text-slate-600">Отслеживание массы тела (взвешивание или антропометрические замеры) минимум раз в неделю для своевременной корректировки стратегии.</p>
+                            <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200 mb-1 transition-colors">Самомониторинг (75%)</h3>
+                            <p class="text-[13px] text-slate-600 dark:text-slate-400 transition-colors">Отслеживание массы тела (взвешивание или антропометрические замеры) минимум раз в неделю для корректировки стратегии.</p>
                         </div>
                     </article>
-                    <article class="p-5 border border-slate-200 rounded-xl bg-slate-50 flex items-start gap-3">
-                        <span class="text-slate-400 mt-0.5" aria-hidden="true">•</span>
+                    <article class="p-5 border border-slate-200 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-800 flex items-start gap-3 transition-colors duration-300">
+                        <span class="text-blue-500 dark:text-blue-400 mt-0.5" aria-hidden="true">•</span>
                         <div>
-                            <h3 class="text-sm font-bold text-slate-800 mb-1">Стабильность рациона</h3>
-                            <p class="text-[13px] text-slate-600">Отсутствие выраженных перепадов в нутритивной корзине между будними и выходными днями (нивелирование концепции «читмилов»).</p>
+                            <h3 class="text-sm font-bold text-slate-800 dark:text-slate-200 mb-1 transition-colors">Стабильность рациона</h3>
+                            <p class="text-[13px] text-slate-600 dark:text-slate-400 transition-colors">Отсутствие выраженных перепадов в нутритивной корзине между будними и выходными днями (нивелирование «читмилов»).</p>
                         </div>
                     </article>
                 </div>
@@ -368,28 +407,63 @@
         </section>
 
         <!-- FAQ -->
-        <section id="faq" class="py-16 px-4 bg-slate-50 border-t border-slate-200">
+        <section id="faq" class="py-16 px-4 bg-white dark:bg-slate-800/50 border-t border-slate-200 dark:border-slate-800 transition-colors duration-300">
             <div class="max-w-3xl mx-auto">
-                <h2 class="text-2xl font-bold text-slate-900 text-center mb-8">Справочная информация (FAQ)</h2>
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white text-center mb-8 transition-colors">Справочная информация (FAQ)</h2>
                 
                 <div class="space-y-4">
-                    <article class="bg-white border border-slate-200 rounded-lg">
-                        <button class="w-full px-5 py-4 text-left font-semibold text-sm text-slate-800 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-slate-300 rounded-lg" aria-expanded="false" aria-controls="faq-answer-1" onclick="toggleAccordion('faq-answer-1', 'icon-1')">
+                    <!-- Вопрос 1 -->
+                    <article class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-sm transition-colors duration-300">
+                        <button class="w-full px-5 py-4 text-left font-semibold text-sm text-slate-800 dark:text-slate-200 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-slate-300 dark:focus:ring-slate-600 rounded-lg" aria-expanded="false" aria-controls="faq-answer-1" onclick="toggleAccordion('faq-answer-1', 'icon-1')">
                             <span>В чем физиологическая причина возврата веса (эффекта йо-йо)?</span>
-                            <span id="icon-1" class="text-slate-400 text-lg transition-transform" aria-hidden="true">+</span>
+                            <span id="icon-1" class="text-slate-400 dark:text-slate-500 text-lg transition-transform" aria-hidden="true">+</span>
                         </button>
-                        <div id="faq-answer-1" class="hidden px-5 pb-4 text-[13px] text-slate-600 leading-relaxed border-t border-slate-100 pt-3" role="region">
+                        <div id="faq-answer-1" class="hidden px-5 pb-4 text-[13px] text-slate-600 dark:text-slate-400 leading-relaxed border-t border-slate-100 dark:border-slate-700 pt-3" role="region">
                             Базовая причина — метаболическая адаптация. Строгая ограничительная диета интерпретируется организмом как стресс, что приводит к снижению базового расхода энергии (BMR) и компенсаторному повышению уровня гормонов голода. При возвращении к привычному объему питания на фоне замедленного метаболизма неминуемо возникает профицит энергии, ведущий к аккумуляции жировой ткани.
                         </div>
                     </article>
 
-                    <article class="bg-white border border-slate-200 rounded-lg">
-                        <button class="w-full px-5 py-4 text-left font-semibold text-sm text-slate-800 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-slate-300 rounded-lg" aria-expanded="false" aria-controls="faq-answer-2" onclick="toggleAccordion('faq-answer-2', 'icon-2')">
+                    <!-- Вопрос 2 -->
+                    <article class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-sm transition-colors duration-300">
+                        <button class="w-full px-5 py-4 text-left font-semibold text-sm text-slate-800 dark:text-slate-200 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-slate-300 dark:focus:ring-slate-600 rounded-lg" aria-expanded="false" aria-controls="faq-answer-2" onclick="toggleAccordion('faq-answer-2', 'icon-2')">
                             <span>Целесообразно ли снижение веса исключительно за счет диеты, без тренировок?</span>
-                            <span id="icon-2" class="text-slate-400 text-lg transition-transform" aria-hidden="true">+</span>
+                            <span id="icon-2" class="text-slate-400 dark:text-slate-500 text-lg transition-transform" aria-hidden="true">+</span>
                         </button>
-                        <div id="faq-answer-2" class="hidden px-5 pb-4 text-[13px] text-slate-600 leading-relaxed border-t border-slate-100 pt-3" role="region">
-                            Снижение массы тела без физических нагрузок (в частности, резистентных) приводит к пропорциональной потере мышечной ткани (LBM). Мышцы являются основным потребителем энергии в состоянии покоя. Их потеря необратимо снижает скорость обмена веществ, что делает процесс долгосрочного удержания веса статистически маловероятным.
+                        <div id="faq-answer-2" class="hidden px-5 pb-4 text-[13px] text-slate-600 dark:text-slate-400 leading-relaxed border-t border-slate-100 dark:border-slate-700 pt-3" role="region">
+                            Снижение массы тела без физических нагрузок (в частности, резистентных) приводит к пропорциональной потере мышечной ткани (LBM). Мышцы являются основным потребителем энергии в состоянии покоя. Их потеря необратимо снижает скорость обмена веществ (BMR), что делает процесс долгосрочного удержания веса статистически маловероятным.
+                        </div>
+                    </article>
+
+                    <!-- Вопрос 3 (Новый) -->
+                    <article class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-sm transition-colors duration-300">
+                        <button class="w-full px-5 py-4 text-left font-semibold text-sm text-slate-800 dark:text-slate-200 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-slate-300 dark:focus:ring-slate-600 rounded-lg" aria-expanded="false" aria-controls="faq-answer-3" onclick="toggleAccordion('faq-answer-3', 'icon-3')">
+                            <span>Ускоряет ли метаболизм частое дробное питание (5-6 раз в день)?</span>
+                            <span id="icon-3" class="text-slate-400 dark:text-slate-500 text-lg transition-transform" aria-hidden="true">+</span>
+                        </button>
+                        <div id="faq-answer-3" class="hidden px-5 pb-4 text-[13px] text-slate-600 dark:text-slate-400 leading-relaxed border-t border-slate-100 dark:border-slate-700 pt-3" role="region">
+                            Нет, это один из распространенных мифов. Термический эффект пищи (TEF) зависит от общего объема и макронутриентного состава съеденного за день (особенно белка), а не от частоты приемов. Научные данные показывают, что при одинаковой суточной калорийности нет разницы в скорости потери жира между 3 и 6 приемами пищи. Главный критерий — приверженность (adherence) выбранному режиму.
+                        </div>
+                    </article>
+
+                    <!-- Вопрос 4 (Новый) -->
+                    <article class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-sm transition-colors duration-300">
+                        <button class="w-full px-5 py-4 text-left font-semibold text-sm text-slate-800 dark:text-slate-200 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-slate-300 dark:focus:ring-slate-600 rounded-lg" aria-expanded="false" aria-controls="faq-answer-4" onclick="toggleAccordion('faq-answer-4', 'icon-4')">
+                            <span>Почему дефицит сна провоцирует переедание?</span>
+                            <span id="icon-4" class="text-slate-400 dark:text-slate-500 text-lg transition-transform" aria-hidden="true">+</span>
+                        </button>
+                        <div id="faq-answer-4" class="hidden px-5 pb-4 text-[13px] text-slate-600 dark:text-slate-400 leading-relaxed border-t border-slate-100 dark:border-slate-700 pt-3" role="region">
+                            Недостаток сна напрямую воздействует на нейроэндокринную систему. Он стимулирует выработку грелина (гормона, сигнализирующего мозгу о голоде) и одновременно снижает концентрацию лептина (гормона сытости). Кроме того, депривация сна активирует эндоканнабиноидную систему, повышая тягу к высококалорийной (жирной и сладкой) пище.
+                        </div>
+                    </article>
+
+                    <!-- Вопрос 5 (Новый) -->
+                    <article class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-sm transition-colors duration-300">
+                        <button class="w-full px-5 py-4 text-left font-semibold text-sm text-slate-800 dark:text-slate-200 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-slate-300 dark:focus:ring-slate-600 rounded-lg" aria-expanded="false" aria-controls="faq-answer-5" onclick="toggleAccordion('faq-answer-5', 'icon-5')">
+                            <span>Обязательны ли тренировки при приеме препаратов класса ГПП-1 (Оземпик, Вегови)?</span>
+                            <span id="icon-5" class="text-slate-400 dark:text-slate-500 text-lg transition-transform" aria-hidden="true">+</span>
+                        </button>
+                        <div id="faq-answer-5" class="hidden px-5 pb-4 text-[13px] text-slate-600 dark:text-slate-400 leading-relaxed border-t border-slate-100 dark:border-slate-700 pt-3" role="region">
+                            Да, клинически обязательны. Препараты ГПП-1 вызывают значительную потерю веса, однако до 40% этой потери может составлять мышечная ткань (саркопения). Для минимизации рисков мышечной атрофии, сохранения метаболического здоровья и профилактики рецидива после отмены препарата, критически важно внедрение силовых тренировок и адекватного потребления белка.
                         </div>
                     </article>
                 </div>
@@ -399,10 +473,10 @@
     </main>
 
     <!-- FOOTER -->
-    <footer class="bg-slate-900 text-slate-400 py-10 px-4 text-center border-t border-slate-800">
+    <footer class="bg-slate-900 dark:bg-black text-slate-400 dark:text-slate-500 py-10 px-4 text-center border-t border-slate-800 dark:border-slate-900 transition-colors duration-300">
         <div class="max-w-4xl mx-auto">
-            <p class="text-sm font-medium text-slate-300 mb-3">Метаболическая Архитектура © 2026</p>
-            <p class="text-[11px] text-slate-500 max-w-2xl mx-auto leading-relaxed">
+            <p class="text-sm font-medium text-slate-300 dark:text-slate-400 mb-3 transition-colors">Метаболическая Архитектура © 2026</p>
+            <p class="text-[11px] text-slate-500 dark:text-slate-600 max-w-2xl mx-auto leading-relaxed transition-colors">
                 Информационные материалы структурированы на базе мета-анализов и открытых клинических руководств (ВОЗ, Mayo Clinic, Harvard Medical School) для образовательных целей. Представленная аналитика не заменяет консультацию квалифицированного медицинского специалиста и не предназначена для постановки диагноза.
             </p>
         </div>
@@ -411,6 +485,44 @@
     <!-- SCRIPTS -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            
+            // Логика переключения темной темы
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const themeToggleBtnMobile = document.getElementById('theme-toggle-mobile');
+            const darkIcon = document.getElementById('theme-toggle-dark-icon');
+            const lightIcon = document.getElementById('theme-toggle-light-icon');
+            const darkIconMobile = document.getElementById('theme-toggle-dark-icon-mobile');
+            const lightIconMobile = document.getElementById('theme-toggle-light-icon-mobile');
+
+            // Установка правильной иконки при загрузке
+            if (document.documentElement.classList.contains('dark')) {
+                lightIcon.classList.remove('hidden');
+                lightIconMobile.classList.remove('hidden');
+            } else {
+                darkIcon.classList.remove('hidden');
+                darkIconMobile.classList.remove('hidden');
+            }
+
+            function toggleTheme() {
+                // Переключение иконок
+                darkIcon.classList.toggle('hidden');
+                lightIcon.classList.toggle('hidden');
+                darkIconMobile.classList.toggle('hidden');
+                lightIconMobile.classList.toggle('hidden');
+
+                // Переключение темы
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                }
+            }
+
+            themeToggleBtn.addEventListener('click', toggleTheme);
+            themeToggleBtnMobile.addEventListener('click', toggleTheme);
+
             
             // Плавный скролл и корректировка отступа для фиксированного хедера
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -422,7 +534,7 @@
                     if(targetElement) {
                         const headerOffset = document.querySelector('header').offsetHeight;
                         const elementPosition = targetElement.getBoundingClientRect().top;
-                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset - 20; // 20px дополнительный отступ
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset - 20;
 
                         window.scrollTo({
                             top: offsetPosition,
@@ -430,7 +542,7 @@
                         });
                     }
                     
-                    // Закрытие мобильного меню при клике на ссылку
+                    // Закрытие мобильного меню
                     const mobileMenu = document.getElementById('mobile-menu');
                     if(!mobileMenu.classList.contains('hidden')) {
                         mobileMenu.classList.add('hidden');
@@ -449,7 +561,7 @@
             });
         });
 
-        // Управление аккордеоном FAQ (вынесена в глобальную область видимости для onclick)
+        // Управление аккордеоном FAQ
         function toggleAccordion(contentId, iconId) {
             const content = document.getElementById(contentId);
             const icon = document.getElementById(iconId);
@@ -470,4 +582,3 @@
     </script>
 </body>
 </html>
-<!-- update -->
